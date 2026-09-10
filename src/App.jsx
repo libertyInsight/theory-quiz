@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { ArrowLeft, Shuffle, Check, X as XIcon, RotateCcw, LayoutGrid, SkipForward } from "lucide-react";
 import QUIZ_DATA from "./data/quizData.json";
 
-const VERSION = "v1.0.0";
+const VERSION = "v1.1.0";
 
 /* ============================================================
    동양윤리사상 기출 아카이브 — 데이터
@@ -172,11 +172,15 @@ function ThemeScreen({ counts, onPick }) {
         >
           어느 계보를 살펴보시겠습니까
         </h1>
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
           <div style={{ width: 120 }}>
             <BrushDivider />
           </div>
         </div>
+        <p className="text-[11px] leading-relaxed" style={{ color: C.mutedDark, fontFamily: "'Noto Sans KR', sans-serif" }}>
+          문항 카드의 <span style={{ color: C.jadeDark }}>기출 기반</span> 표시는 실제 기출·모의고사를 재편집한 문항,{" "}
+          <span style={{ color: C.sealDark }}>예상문제</span> 표시는 개념을 바탕으로 새로 구성한 문항입니다.
+        </p>
       </div>
 
       <div className="space-y-4">
@@ -518,12 +522,24 @@ function QuizScreen({ queue, onFinish, onExit }) {
           {item.hanja}
         </div>
 
-        <span
-          className="inline-block text-[10px] px-2 py-0.5 rounded-full mb-4 relative z-10"
-          style={{ background: C.paperAlt, color: C.inkText, fontFamily: "'Noto Sans KR', sans-serif" }}
-        >
-          {item.category}
-        </span>
+        <div className="flex items-center gap-2 mb-4 relative z-10">
+          <span
+            className="inline-block text-[10px] px-2 py-0.5 rounded-full"
+            style={{ background: C.paperAlt, color: C.inkText, fontFamily: "'Noto Sans KR', sans-serif" }}
+          >
+            {item.category}
+          </span>
+          <span
+            className="inline-block text-[10px] px-2 py-0.5 rounded-full font-bold"
+            style={
+              item.source === "기출편집"
+                ? { background: `${C.jade}22`, color: C.jadeDark, fontFamily: "'Noto Sans KR', sans-serif" }
+                : { background: `${C.seal}1a`, color: C.sealDark, fontFamily: "'Noto Sans KR', sans-serif" }
+            }
+          >
+            {item.source === "기출편집" ? "기출 기반" : "예상문제"}
+          </span>
+        </div>
 
         <p
           className="relative z-10 leading-relaxed"
